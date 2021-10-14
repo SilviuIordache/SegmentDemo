@@ -1,5 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const dotenv = require('dotenv')
+dotenv.config();
 
 const app = express();
 
@@ -14,8 +16,8 @@ app.get('/segment', (req, res) => {
     message: 'hello new project',
     response: req.body
   })
-})
+});
 
-app.listen(3000, () => {
-  console.log(`listening on port 3000`);
+app.listen(process.env.PORT, () => {
+  console.log(`listening on port ${process.env.PORT}`);
 });
