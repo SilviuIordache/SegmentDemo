@@ -18,6 +18,13 @@ app.get('/segment', (req, res) => {
   })
 });
 
+app.post('/segment', (req, res) => {
+  return res.status(200).json({
+    request: req.body,
+    message: 'salut de la Geani'
+  })
+});
+
 app.listen(process.env.PORT, () => {
   console.log(`listening on port ${process.env.PORT}`);
 });
