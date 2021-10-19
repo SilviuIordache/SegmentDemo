@@ -1,9 +1,20 @@
-const express = require('express');
+const app = require('express')();
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv')
 dotenv.config();
 
-const app = express();
+
+// Whenever someone connects this gets executed
+io.on('connection', (socket) => {
+  console.log(socket.id + ' connected');
+
+  // Whenever someone disconnects this piece of code executed
+  socket.on('disconnect', () => {
+     console.log(socket.id +' disconnected');
+  });
+});
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -19,12 +30,18 @@ app.get('/segment', (req, res) => {
 });
 
 app.post('/segment', (req, res) => {
+
+  // emit segment data via socket.io
+  io.emit('segment', {
+    request: req.body
+  });
+
   return res.status(200).json({
     request: req.body,
     message: 'salut de la Geani'
   })
 });
 
-app.listen(process.env.PORT, () => {
+http.listen(process.env.PORT, () => {
   console.log(`listening on port ${process.env.PORT}`);
 });
