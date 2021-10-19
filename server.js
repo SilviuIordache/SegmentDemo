@@ -1,9 +1,11 @@
 const app = require('express')();
 const http = require('http').Server(app);
-const io = require('socket.io')(http);
+const io = require('socket.io')(http, { cors: { origin: '*' } });
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv')
 dotenv.config();
+
+app.use(cors());
 
 
 // Whenever someone connects this gets executed
