@@ -2,7 +2,8 @@ const app = require('express')();
 const http = require('http').Server(app);
 const io = require('socket.io')(http, { cors: { origin: '*' } });
 const bodyParser = require('body-parser');
-const dotenv = require('dotenv')
+const dotenv = require('dotenv');
+const cors = require('cors');
 dotenv.config();
 
 app.use(cors());
